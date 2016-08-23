@@ -9,18 +9,37 @@ class Conversion_Initiator
 			"D" => 500,
 			"M" => 1000
 			}
-#should be printed before chomp
+#TODO:should be printed before chomp
 		#print "Enter A"
-		a = gets.chomp
-		chars = a.split('')
+
+
+		temp = 1001
+		sum = 0  #to hold value
+		count = 0
+		input = gets.chomp
+
+		#for input validation IXCM will not appear more than 3 time and DLV will not appear more ten once
+		#TODO: has to be done once
+		unless /([IXCM])\1{2}/ =~ input || /([DLV])\1{1}/ =~ input
+			p "Validation success for input roman numeral #{input}"
+		else
+			p "Validation failed for input string"
+		end
+
+		chars = input.split('')
+		# have to find a better implemenation
 		chars.each do |c|
 			unless roman_values.has_key? c
-				puts "Error wrong value printed"
+				p "Error wrong roman numeral value entered #{c} will skip"
 			end
-			#p roman_values.has_key? c
-			p roman_values[c]
+			if temp < roman_values[c]
+				sum = sum - 2*temp + roman_values[c]
+			else
+				sum = sum + roman_values[c]
+			end
+			temp = roman_values[c]
 		end
-		#puts chars.length
+		puts "Value for roman numeral #{input} is #{sum}"
 	end
 end
 Conversion_Initiator.new
