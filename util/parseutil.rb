@@ -6,7 +6,7 @@ class ParseUtil < ConvertCurrency
   def parse_user_input
     input_string_multp_currency_hash = {}
     input_string_currency_hash = {}
-    1.times do
+    10.times do
       input_string = gets.chomp
       if /^([a-zA-Z0-9])+\s+is\s+([a-zA-Z0-9]){1}$/ =~ input_string   # for input string type glob is I
         matchdata = input_string.match(/([^>]*) is ([^>]*)/)
@@ -18,8 +18,8 @@ class ParseUtil < ConvertCurrency
         integer_value = roman_to_integer temp
         input_string_multp_currency_hash[matchdata[3]] = matchdata[4].to_i/integer_value
       end
+      p input_string_multp_currency_hash
     end
-    p input_string_multp_currency_hash
     #p $roman_values
     #puts "Doom"
   end
