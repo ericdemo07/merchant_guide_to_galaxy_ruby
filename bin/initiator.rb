@@ -1,45 +1,18 @@
+Dir[File.dirname(__FILE__) + '/../util/*.rb'].each {|file| require file } #will load all files under util directory
+
 class Conversion_Initiator
 	def initialize
-		roman_values = {
-			"I" => 1,
-			"V" => 5,
-			"X" => 10,
-			"L" => 50,
-			"C" => 100,
-			"D" => 500,
-			"M" => 1000
-			}
-#TODO:should be printed before chomp
-		#print "Enter A"
-
-
-		temp = 1001
-		sum = 0  #to hold value
-		count = 0
-		input = gets.chomp
-
-		#for input validation IXCM will not appear more than 3 time and DLV will not appear more ten once
-		#TODO: has to be done once
-		unless /([IXCM])\1{2}/ =~ input || /([DLV])\1{1}/ =~ input
-			p "Validation success for input roman numeral #{input}"
+	end
+	def process
+		input_string = gets.chomp
+		flag_input_validate = Validate.new
+		currency_convert_object = ConvertCurrency.new
+		if flag_input_validate.validate_input input_string
+			currency_convert_object.roman_to_integer input_string
 		else
-			p "Validation failed for input string"
+			p "Wrong input"
 		end
-
-		chars = input.split('')
-		# have to find a better implemenation
-		chars.each do |c|
-			unless roman_values.has_key? c
-				p "Error wrong roman numeral value entered #{c} will skip"
-			end
-			if temp < roman_values[c]
-				sum = sum - 2*temp + roman_values[c]
-			else
-				sum = sum + roman_values[c]
-			end
-			temp = roman_values[c]
-		end
-		puts "Value for roman numeral #{input} is #{sum}"
 	end
 end
-Conversion_Initiator.new
+object = Conversion_Initiator.new
+object.process
