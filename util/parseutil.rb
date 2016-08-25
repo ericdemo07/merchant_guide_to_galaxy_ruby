@@ -7,26 +7,38 @@ class ParseUtil < ConvertCurrency
     input_string_multp_currency_hash = {}
     input_string_currency_hash = {}
     10.times do
-      input_string = gets.chomp
-      if /^([a-zA-Z0-9])+\s+is\s+([a-zA-Z0-9]){1}$/ =~ input_string   # for input string type glob is I
+      input_string = gets.chomp.strip
+      # for input string type glob is I
+      if /^([a-zA-Z0-9])+\s+is\s+([a-zA-Z0-9]){1}$/ =~ input_string
         matchdata = input_string.match(/([^>]*) is ([^>]*)/)
         input_string_currency_hash[matchdata[1]] = matchdata[2]
-      end
-      if /^([a-zA-Z0-9])+\s([a-zA-Z0-9])+\s([a-zA-Z0-9])+\s+is\s+([0-9])+\sCredits$/ =~ input_string   # for input string type glob glob Silver is 34 Credits
+        #p input_string_currency_hash
+      # for input string type glob glob Silver is 34 Credits
+    elsif /^([a-zA-Z0-9])+\s([a-zA-Z0-9])+\s([a-zA-Z0-9])+\s+is\s+([0-9])+\sCredits$/ =~ input_string
         matchdata = input_string.match(/([^>]*) ([^>]*) ([^>]*) is ([^>]*) Credits/)
-        temp =  input_string_currency_hash[matchdata[1]].to_s.concat(input_string_currency_hash[matchdata[2]].to_s)
+        temp =  (input_string_currency_hash[matchdata[1]].to_s) + (input_string_currency_hash[matchdata[2]].to_s)
         integer_value = roman_to_integer temp
         input_string_multp_currency_hash[matchdata[3]] = matchdata[4].to_i/integer_value
-        p input_string_multp_currency_hash
-      end
-      if /^how much is\s([a-zA-Z0-9]+)\s([a-zA-Z0-9]+)\s([a-zA-Z0-9]+)\s([a-zA-Z0-9]+)\s\?$/ =~ input_string   # for input string type how much is pish tegj glob glob ?
+        #p input_string_multp_currency_hash
+      # for input string type how much is pish tegj glob glob ?
+    elsif /^how much is\s([a-zA-Z0-9]+)\s([a-zA-Z0-9]+)\s([a-zA-Z0-9]+)\s([a-zA-Z0-9]+)\s\?$/ =~ input_string
         matchdata = input_string.match(/how much is ([^>]*) ([^>]*) ([^>]*) ([^>]*) ([^>]*) ?/)
-        temp = input_string_currency_hash[matchdata[1]].to_s.concat(input_string_currency_hash[matchdata[2]].to_s).concat(input_string_currency_hash[matchdata[3]].to_s).concat(input_string_currency_hash[matchdata[4]].to_s)
+        temp = (input_string_currency_hash[matchdata[1]].to_s) + (input_string_currency_hash[matchdata[2]].to_s) + (input_string_currency_hash[matchdata[3]].to_s) + (input_string_currency_hash[matchdata[4]].to_s)
         integer_value = roman_to_integer temp
-        p matchdata[5]
         #pish tegj glob glob is 42
-        output = matchdata[1].concat(' ').concat(matchdata[2]).concat(' ').concat(matchdata[3]).concat(' ').concat(matchdata[4]).concat(' is ').concat(integer_value.to_s)
+        output = (matchdata[1]) + (' ') + (matchdata[2]) + (' ') + (matchdata[3]) + (' ') + (matchdata[4]) + (' is ') + (integer_value.to_s)
         p output
+      #how many Credits is glob prok Iron ?
+    elsif /^how many Credits is\s([a-zA-Z0-9]+)\s([a-zA-Z0-9]+)\s([a-zA-Z0-9]+)\s\?$/ =~ input_string
+        matchdata = input_string.match(/how many Credits is ([^>]*) ([^>]*) ([^>]*) ([^>]*) ?/)
+        temp = (input_string_currency_hash[matchdata[1]].to_s) + (input_string_currency_hash[matchdata[2]].to_s)
+        integer_value = roman_to_integer temp
+        calculated_value = integer_value * input_string_multp_currency_hash[matchdata[3]]
+        #glob prok Silver is 68 Credits
+        output = (matchdata[1]) + (' ') + (matchdata[2]) + (' ') + (matchdata[3]) + (' is ') + (calculated_value.to_s) + (' Credits ')
+        p output
+      else
+        p "I have no idea what you are talking about"
       end
     end
   end

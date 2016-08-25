@@ -28,7 +28,7 @@ class ConvertCurrency
       end
       temp = $roman_values[c]
     end
-    puts "Value for roman numeral #{inputstring} is #{sum}"
+    #puts "Value for roman numeral #{inputstring} is #{sum}"
     sum.to_i
   end
 end
