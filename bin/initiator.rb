@@ -13,7 +13,11 @@ class Conversion_Initiator
 		#else
 		#	p "Wrong input"
 		#end
-		parse_util_object.parse_user_input
+		input_file = File.open('../input/sample_input.txt').read
+		output_file = File.open( '../output/output.txt',"w" )
+    input_file.gsub!(/\r\n?/, "\n")
+		parse_util_object.parse_user_input(input_file, output_file)
+		output_file.close
 	end
 end
 object = Conversion_Initiator.new
