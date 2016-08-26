@@ -1,4 +1,6 @@
-class ConvertCurrency
+require_relative 'romanvalidation'
+
+class ConvertCurrency < Validate
   def initialize
     #is a constant and can get global access
     $roman_values = {
@@ -12,23 +14,23 @@ class ConvertCurrency
 			}
   end
   def roman_to_integer inputstring
-    temp = 1001
-		sum = 0
-		count = 0
-    chars = inputstring.split('')
-    chars.each do |c|
-    #
-    #  unless @roman_values.has_key? c
-    #    p "Error wrong roman numeral value entered #{c} will skip"
-    #  end
-      if temp < $roman_values[c]
-        sum = sum - 2*temp + $roman_values[c]
-      else
-        sum = sum + $roman_values[c]
+    unless validate_input inputstring
+      sum = false
+      sum
+    else
+      temp = 1001
+  		sum = 0
+  		count = 0
+      chars = inputstring.split('')
+      chars.each do |c|
+        if temp < $roman_values[c]
+          sum = sum - 2*temp + $roman_values[c]
+        else
+          sum = sum + $roman_values[c]
+        end
+        temp = $roman_values[c]
       end
-      temp = $roman_values[c]
+      sum
     end
-    #puts "Value for roman numeral #{inputstring} is #{sum}"
-    sum.to_i
   end
 end

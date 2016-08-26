@@ -1,23 +1,37 @@
+require 'yaml'
+require 'logger'
 Dir[File.dirname(__FILE__) + '/../util/*.rb'].each {|file| require file } #will load all files under util directory
 
 class Conversion_Initiator
 	def initialize
 	end
 	def process
-		#input_string = gets.chomp
+		time = Time.new
+		conf = YAML.load_file(File.expand_path('../conf/local.yml', File.dirname(__FILE__)))
+		logname = conf['logpath'] + time.strftime('%Y%m%d')
+		logpath = File.expand_path(logname, File.dirname(__FILE__))
+		log = Logger.new logpath
+    log.info '__start Merchants Guide to the Galaxy__'
 		flag_input_validate = Validate.new
 		currency_convert_object = ConvertCurrency.new
 		parse_util_object = ParseUtil.new
-		#if flag_input_validate.validate_input input_string
-			#currency_convert_object.roman_to_integer input_string
-		#else
-		#	p "Wrong input"
-		#end
-		input_file = File.open('../input/sample_input.txt').read
-		output_file = File.open( '../output/output.txt',"w" )
-    input_file.gsub!(/\r\n?/, "\n")
-		parse_util_object.parse_user_input(input_file, output_file)
-		output_file.close
+		unless File.file?(File.expand_path(conf['path']['input_file'], File.dirname(__FILE__)))
+			log.info "input file does not exist"
+		else
+			begin
+				input_file = File.open(File.expand_path(conf['path']['input_file'], File.dirname(__FILE__))).read
+				output_file = File.open(File.expand_path(conf['path']['output_file'], File.dirname(__FILE__)),"w" )
+    		input_file.gsub!(/\r\n?/, "\n")
+				parse_util_object.parse_user_input(input_file, output_file, conf, log)
+			rescue Exception => msg
+				log.info "following exception occoured #{msg}"
+			ensure
+				log.info '__end Merchants Guide to the Galaxy__'
+				log.info ' '
+				log.info ' '
+				output_file.close
+			end
+		end
 	end
 end
 object = Conversion_Initiator.new

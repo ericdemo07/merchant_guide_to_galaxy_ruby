@@ -1,0 +1,5 @@
+path:
+  input_file: ../input/sample_input.txt
+  output_file: ../output/output.txt
+
+logpath : ../log/
