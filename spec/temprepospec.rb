@@ -1,12 +1,7 @@
-RSpec.describe RocketmilesPostReport do
-  context 'check opt' do
-    it 'no RocketMilesPostReport section' do
-      conf = SpecConf.new(CONF_RNAME)
+require_relative '../util/currencyconvert'
 
-      expect do
-        conf['post_report'].delete('RocketmilesPostReport')
-
-        RocketmilesPostReport.new(TestOutput.new, conf,
-                                  SpecLoggerMaker.logger(conf))
-      end.to raise_error("RocketMilesPostReport doesn't found")
+RSpec.describe ConvertCurrency do
+  context 'test conversion' do
+    it 'sum' do
+      Conversion_initiator =
     end
