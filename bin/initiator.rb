@@ -22,7 +22,7 @@ class ConversionInitiator
         input_file = File.open(File.expand_path(conf['path']['input_file'], File.dirname(__FILE__))).read
         output_file = File.open(File.expand_path(conf['path']['output_file'], File.dirname(__FILE__)), 'w')
         input_file.gsub!(/\r\n?/, "\n")
-        parse_util_object.parse_user_input(input_file, output_file, conf, log)
+        parse_util_object.parse_user_input(input_file, output_file, log)
       rescue Exception => msg
         log.info "following exception occoured #{msg}"
       ensure

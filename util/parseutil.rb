@@ -4,7 +4,7 @@ class ParseUtil < ConvertCurrency
   def initialize
   end
 
-  def parse_user_input(input_file, output_file, _conf, log)
+  def parse_user_input(input_file, output_file, log)
     input_string_multp_currency_hash = {}
     input_string_currency_hash = {}
     input_file.each_line do |line|
