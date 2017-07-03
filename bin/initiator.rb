@@ -5,9 +5,6 @@ require_relative '../util/currencyconvert'
 require_relative '../util/parseutil'
 
 class ConversionInitiator
-  def initialize
-  end
-
   def process
     time = Time.new
     conf = YAML.load_file(File.expand_path('../conf/local.yml', File.dirname(__FILE__)))
