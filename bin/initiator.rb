@@ -17,6 +17,7 @@ class ConversionInitiator
     if File.file?(File.expand_path(conf['path']['input_file'], File.dirname(__FILE__)))
       begin
         input_file = File.open(File.expand_path(conf['path']['input_file'], File.dirname(__FILE__))).read
+        puts input_file.to_s
         output_file = File.open(File.expand_path(conf['path']['output_file'], File.dirname(__FILE__)), 'w')
         input_file.gsub!(/\r\n?/, "\n")
         parse_util_object.parse_user_input(input_file, output_file, log)

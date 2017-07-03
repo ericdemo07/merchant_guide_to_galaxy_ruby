@@ -10,5 +10,5 @@ task :test do
   RSpec::Core::RakeTask.new(:spec) do |t|
     t.pattern = 'spec/specmain.rb'
   end
-  Rake::Task["spec"].execute
+  Rake::Task['spec'].execute
 end
